@@ -20,7 +20,8 @@ import {
   Phone,
   Linkedin,
   Globe,
-  MapPin
+  ExternalLink,
+  Check
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -33,7 +34,7 @@ interface ResumeBuilderProps {
 }
 
 interface ResumeData {
-  style: "classic" | "modern" | "creative"
+  style: string
   personalInfo: {
     fullName: string
     email: string
@@ -48,32 +49,57 @@ interface ResumeData {
 }
 
 const steps = [
-  { id: 1, title: "Style", icon: Palette, description: "Choose your resume style" },
-  { id: 2, title: "Personal", icon: User, description: "Your contact information" },
-  { id: 3, title: "Education", icon: GraduationCap, description: "Academic background" },
-  { id: 4, title: "Experience", icon: Briefcase, description: "Work history (optional)" },
-  { id: 5, title: "Skills", icon: Sparkles, description: "Skills & interests" },
+  { id: 1, title: "Personal", icon: User, description: "Your contact information" },
+  { id: 2, title: "Education", icon: GraduationCap, description: "Academic background" },
+  { id: 3, title: "Experience", icon: Briefcase, description: "Work history (optional)" },
+  { id: 4, title: "Skills", icon: Sparkles, description: "Skills & interests" },
+  { id: 5, title: "Template", icon: Palette, description: "Choose your style" },
   { id: 6, title: "Download", icon: Download, description: "Get your resume" },
 ]
 
-const resumeStyles = [
+// Professional resume templates inspired by popular online platforms
+const resumeTemplates = [
   { 
-    id: "classic" as const, 
-    name: "Classic", 
-    description: "Traditional and professional format",
-    colors: { primary: "#1a1a2e", secondary: "#16213e", accent: "#0f3460" }
+    id: "minimalist", 
+    name: "Minimalist", 
+    description: "Clean and simple design inspired by Canva",
+    source: "Canva Style",
+    colors: { primary: "#1a1a1a", secondary: "#4a4a4a", accent: "#f5f5f5", highlight: "#000000" }
   },
   { 
-    id: "modern" as const, 
+    id: "professional", 
+    name: "Professional", 
+    description: "Corporate look inspired by Resume.io",
+    source: "Resume.io Style",
+    colors: { primary: "#1e3a5f", secondary: "#2c5282", accent: "#ebf8ff", highlight: "#1e3a5f" }
+  },
+  { 
+    id: "modern", 
     name: "Modern", 
-    description: "Clean and contemporary design",
-    colors: { primary: "#2563eb", secondary: "#3b82f6", accent: "#60a5fa" }
+    description: "Contemporary design from Novoresume",
+    source: "Novoresume Style",
+    colors: { primary: "#2563eb", secondary: "#3b82f6", accent: "#dbeafe", highlight: "#1d4ed8" }
   },
   { 
-    id: "creative" as const, 
+    id: "elegant", 
+    name: "Elegant", 
+    description: "Sophisticated style from Zety",
+    source: "Zety Style",
+    colors: { primary: "#374151", secondary: "#6b7280", accent: "#f9fafb", highlight: "#111827" }
+  },
+  { 
+    id: "creative", 
     name: "Creative", 
-    description: "Bold and eye-catching layout",
-    colors: { primary: "#7c3aed", secondary: "#8b5cf6", accent: "#a78bfa" }
+    description: "Bold design inspired by VisualCV",
+    source: "VisualCV Style",
+    colors: { primary: "#7c3aed", secondary: "#8b5cf6", accent: "#ede9fe", highlight: "#6d28d9" }
+  },
+  { 
+    id: "executive", 
+    name: "Executive", 
+    description: "Premium look from ResumeGenius",
+    source: "ResumeGenius Style",
+    colors: { primary: "#0f766e", secondary: "#14b8a6", accent: "#ccfbf1", highlight: "#0d9488" }
   },
 ]
 
@@ -81,7 +107,7 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   const [step, setStep] = useState(1)
   const resumeRef = useRef<HTMLDivElement>(null)
   const [resumeData, setResumeData] = useState<ResumeData>({
-    style: "modern",
+    style: "professional",
     personalInfo: { fullName: "", email: "", phone: "", linkedin: "", portfolio: "" },
     education: [{ institution: "", degree: "", field: "", startYear: "", endYear: "", grade: "" }],
     experience: [{ company: "", role: "", startDate: "", endDate: "", description: "", current: false }],
@@ -227,7 +253,6 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
         console.log('Share cancelled')
       }
     } else {
-      // Fallback: copy to clipboard notification
       alert('Share feature is not supported on this browser. You can download and share the PDF instead.')
     }
   }
@@ -235,23 +260,466 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   const canProceed = () => {
     switch (step) {
       case 1:
-        return resumeData.style !== null
-      case 2:
         return resumeData.personalInfo.fullName && resumeData.personalInfo.email && resumeData.personalInfo.phone
-      case 3:
+      case 2:
         return resumeData.education.some(edu => edu.institution && edu.degree)
-      case 4:
+      case 3:
         return true // Experience is optional
-      case 5:
+      case 4:
         return resumeData.skills.some(skill => skill.trim() !== "")
+      case 5:
+        return resumeData.style !== null
       default:
         return true
     }
   }
 
-  const getStyleColors = () => {
-    const style = resumeStyles.find(s => s.id === resumeData.style)
-    return style?.colors || resumeStyles[1].colors
+  const getSelectedTemplate = () => {
+    return resumeTemplates.find(t => t.id === resumeData.style) || resumeTemplates[1]
+  }
+
+  const renderResumePreview = () => {
+    const template = getSelectedTemplate()
+    
+    switch (resumeData.style) {
+      case 'minimalist':
+        return (
+          <div className="p-10" style={{ fontFamily: 'system-ui, sans-serif' }}>
+            <div className="mb-8">
+              <h1 className="text-4xl font-light tracking-tight text-gray-900 mb-2">
+                {resumeData.personalInfo.fullName || 'Your Name'}
+              </h1>
+              <div className="flex flex-wrap gap-4 text-sm text-gray-500">
+                {resumeData.personalInfo.email && <span>{resumeData.personalInfo.email}</span>}
+                {resumeData.personalInfo.phone && <span>{resumeData.personalInfo.phone}</span>}
+                {resumeData.personalInfo.linkedin && <span>{resumeData.personalInfo.linkedin}</span>}
+                {resumeData.personalInfo.portfolio && <span>{resumeData.personalInfo.portfolio}</span>}
+              </div>
+            </div>
+            
+            <div className="h-px bg-gray-200 mb-8" />
+            
+            {resumeData.education.some(edu => edu.institution) && (
+              <div className="mb-8">
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Education</h2>
+                {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
+                  <div key={index} className="mb-4">
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-900">{edu.institution}</span>
+                      <span className="text-sm text-gray-500">{edu.startYear} - {edu.endYear}</span>
+                    </div>
+                    <div className="text-gray-600 text-sm">{edu.degree}{edu.field && ` in ${edu.field}`}</div>
+                    {edu.grade && <div className="text-gray-400 text-sm">{edu.grade}</div>}
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            {resumeData.experience.some(exp => exp.company) && (
+              <div className="mb-8">
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Experience</h2>
+                {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
+                  <div key={index} className="mb-4">
+                    <div className="flex justify-between">
+                      <span className="font-medium text-gray-900">{exp.role}</span>
+                      <span className="text-sm text-gray-500">{exp.startDate} - {exp.endDate}</span>
+                    </div>
+                    <div className="text-gray-600 text-sm">{exp.company}</div>
+                    {exp.description && <p className="text-gray-500 text-sm mt-2">{exp.description}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            {resumeData.skills.some(skill => skill) && (
+              <div className="mb-8">
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Skills</h2>
+                <p className="text-gray-700">{resumeData.skills.filter(s => s).join(' / ')}</p>
+              </div>
+            )}
+            
+            {resumeData.interests.some(interest => interest) && (
+              <div>
+                <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Interests</h2>
+                <p className="text-gray-700">{resumeData.interests.filter(i => i).join(' / ')}</p>
+              </div>
+            )}
+          </div>
+        )
+
+      case 'professional':
+        return (
+          <div style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="bg-[#1e3a5f] text-white p-8">
+              <h1 className="text-3xl font-bold mb-2">{resumeData.personalInfo.fullName || 'Your Name'}</h1>
+              <div className="flex flex-wrap gap-4 text-sm text-blue-100">
+                {resumeData.personalInfo.email && <span className="flex items-center gap-1"><Mail className="w-3 h-3" /> {resumeData.personalInfo.email}</span>}
+                {resumeData.personalInfo.phone && <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> {resumeData.personalInfo.phone}</span>}
+                {resumeData.personalInfo.linkedin && <span className="flex items-center gap-1"><Linkedin className="w-3 h-3" /> {resumeData.personalInfo.linkedin}</span>}
+                {resumeData.personalInfo.portfolio && <span className="flex items-center gap-1"><Globe className="w-3 h-3" /> {resumeData.personalInfo.portfolio}</span>}
+              </div>
+            </div>
+            
+            <div className="p-8">
+              {resumeData.education.some(edu => edu.institution) && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-bold text-[#1e3a5f] border-b-2 border-[#1e3a5f] pb-1 mb-4">EDUCATION</h2>
+                  {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
+                    <div key={index} className="mb-3">
+                      <div className="flex justify-between">
+                        <strong className="text-gray-900">{edu.institution}</strong>
+                        <span className="text-gray-600">{edu.startYear} - {edu.endYear}</span>
+                      </div>
+                      <div className="text-gray-700">{edu.degree}{edu.field && ` in ${edu.field}`}</div>
+                      {edu.grade && <div className="text-gray-500 text-sm">{edu.grade}</div>}
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {resumeData.experience.some(exp => exp.company) && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-bold text-[#1e3a5f] border-b-2 border-[#1e3a5f] pb-1 mb-4">EXPERIENCE</h2>
+                  {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
+                    <div key={index} className="mb-3">
+                      <div className="flex justify-between">
+                        <strong className="text-gray-900">{exp.role}</strong>
+                        <span className="text-gray-600">{exp.startDate} - {exp.endDate}</span>
+                      </div>
+                      <div className="text-gray-700 italic">{exp.company}</div>
+                      {exp.description && <p className="text-gray-600 mt-1 text-sm">{exp.description}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {resumeData.skills.some(skill => skill) && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-bold text-[#1e3a5f] border-b-2 border-[#1e3a5f] pb-1 mb-4">SKILLS</h2>
+                  <p className="text-gray-700">{resumeData.skills.filter(s => s).join(' • ')}</p>
+                </div>
+              )}
+              
+              {resumeData.interests.some(interest => interest) && (
+                <div>
+                  <h2 className="text-lg font-bold text-[#1e3a5f] border-b-2 border-[#1e3a5f] pb-1 mb-4">INTERESTS</h2>
+                  <p className="text-gray-700">{resumeData.interests.filter(i => i).join(' • ')}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )
+
+      case 'modern':
+        return (
+          <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+            <div className="bg-blue-600 text-white p-8">
+              <h1 className="text-3xl font-bold mb-2">{resumeData.personalInfo.fullName || 'Your Name'}</h1>
+              <div className="flex flex-wrap gap-4 text-sm text-blue-100">
+                {resumeData.personalInfo.email && <span className="flex items-center gap-1"><Mail className="w-3 h-3" /> {resumeData.personalInfo.email}</span>}
+                {resumeData.personalInfo.phone && <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> {resumeData.personalInfo.phone}</span>}
+                {resumeData.personalInfo.linkedin && <span className="flex items-center gap-1"><Linkedin className="w-3 h-3" /> {resumeData.personalInfo.linkedin}</span>}
+                {resumeData.personalInfo.portfolio && <span className="flex items-center gap-1"><Globe className="w-3 h-3" /> {resumeData.personalInfo.portfolio}</span>}
+              </div>
+            </div>
+            
+            <div className="p-8">
+              {resumeData.education.some(edu => edu.institution) && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-bold text-blue-600 mb-3 flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5" /> Education
+                  </h2>
+                  {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
+                    <div key={index} className="mb-3 pl-4 border-l-2 border-blue-200">
+                      <div className="font-semibold text-gray-900">{edu.institution}</div>
+                      <div className="text-gray-700">{edu.degree}{edu.field && ` in ${edu.field}`}</div>
+                      <div className="text-sm text-gray-500">{edu.startYear} - {edu.endYear}{edu.grade && ` | ${edu.grade}`}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {resumeData.experience.some(exp => exp.company) && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-bold text-blue-600 mb-3 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5" /> Experience
+                  </h2>
+                  {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
+                    <div key={index} className="mb-3 pl-4 border-l-2 border-blue-200">
+                      <div className="font-semibold text-gray-900">{exp.role}</div>
+                      <div className="text-gray-700">{exp.company}</div>
+                      <div className="text-sm text-gray-500">{exp.startDate} - {exp.endDate}</div>
+                      {exp.description && <p className="text-gray-600 mt-1 text-sm">{exp.description}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {resumeData.skills.some(skill => skill) && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-bold text-blue-600 mb-3 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5" /> Skills
+                  </h2>
+                  <div className="flex flex-wrap gap-2">
+                    {resumeData.skills.filter(s => s).map((skill, index) => (
+                      <span key={index} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">{skill}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {resumeData.interests.some(interest => interest) && (
+                <div>
+                  <h2 className="text-lg font-bold text-blue-600 mb-3 flex items-center gap-2">
+                    <FileText className="w-5 h-5" /> Interests
+                  </h2>
+                  <div className="flex flex-wrap gap-2">
+                    {resumeData.interests.filter(i => i).map((interest, index) => (
+                      <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">{interest}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )
+
+      case 'elegant':
+        return (
+          <div className="p-10" style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="text-center mb-8 pb-6 border-b border-gray-200">
+              <h1 className="text-4xl font-normal text-gray-800 mb-3 tracking-wide">
+                {resumeData.personalInfo.fullName || 'Your Name'}
+              </h1>
+              <div className="flex items-center justify-center flex-wrap gap-6 text-sm text-gray-500">
+                {resumeData.personalInfo.email && <span>{resumeData.personalInfo.email}</span>}
+                {resumeData.personalInfo.phone && <span>{resumeData.personalInfo.phone}</span>}
+                {resumeData.personalInfo.linkedin && <span>{resumeData.personalInfo.linkedin}</span>}
+                {resumeData.personalInfo.portfolio && <span>{resumeData.personalInfo.portfolio}</span>}
+              </div>
+            </div>
+            
+            {resumeData.education.some(edu => edu.institution) && (
+              <div className="mb-8">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400 mb-4 text-center">Education</h2>
+                {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
+                  <div key={index} className="mb-4 text-center">
+                    <div className="font-medium text-gray-800">{edu.institution}</div>
+                    <div className="text-gray-600">{edu.degree}{edu.field && ` in ${edu.field}`}</div>
+                    <div className="text-sm text-gray-400">{edu.startYear} - {edu.endYear}{edu.grade && ` | ${edu.grade}`}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            {resumeData.experience.some(exp => exp.company) && (
+              <div className="mb-8">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400 mb-4 text-center">Experience</h2>
+                {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
+                  <div key={index} className="mb-4 text-center">
+                    <div className="font-medium text-gray-800">{exp.role}</div>
+                    <div className="text-gray-600 italic">{exp.company}</div>
+                    <div className="text-sm text-gray-400">{exp.startDate} - {exp.endDate}</div>
+                    {exp.description && <p className="text-gray-500 mt-2 text-sm max-w-lg mx-auto">{exp.description}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            {resumeData.skills.some(skill => skill) && (
+              <div className="mb-8 text-center">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400 mb-4">Skills</h2>
+                <p className="text-gray-700">{resumeData.skills.filter(s => s).join('  |  ')}</p>
+              </div>
+            )}
+            
+            {resumeData.interests.some(interest => interest) && (
+              <div className="text-center">
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400 mb-4">Interests</h2>
+                <p className="text-gray-700">{resumeData.interests.filter(i => i).join('  |  ')}</p>
+              </div>
+            )}
+          </div>
+        )
+
+      case 'creative':
+        return (
+          <div className="flex" style={{ fontFamily: 'system-ui, sans-serif', minHeight: '11in' }}>
+            <div className="w-1/3 bg-purple-700 text-white p-6">
+              <div className="mb-8">
+                <div className="w-24 h-24 rounded-full bg-purple-500 mx-auto mb-4 flex items-center justify-center text-3xl font-bold">
+                  {resumeData.personalInfo.fullName?.charAt(0) || 'N'}
+                </div>
+                <h1 className="text-xl font-bold text-center">{resumeData.personalInfo.fullName || 'Your Name'}</h1>
+              </div>
+              
+              <div className="mb-6">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-purple-200 mb-3">Contact</h3>
+                <div className="space-y-2 text-sm">
+                  {resumeData.personalInfo.email && <div className="flex items-center gap-2"><Mail className="w-3 h-3" /><span className="break-all">{resumeData.personalInfo.email}</span></div>}
+                  {resumeData.personalInfo.phone && <div className="flex items-center gap-2"><Phone className="w-3 h-3" /><span>{resumeData.personalInfo.phone}</span></div>}
+                  {resumeData.personalInfo.linkedin && <div className="flex items-center gap-2"><Linkedin className="w-3 h-3" /><span className="break-all">{resumeData.personalInfo.linkedin}</span></div>}
+                  {resumeData.personalInfo.portfolio && <div className="flex items-center gap-2"><Globe className="w-3 h-3" /><span className="break-all">{resumeData.personalInfo.portfolio}</span></div>}
+                </div>
+              </div>
+              
+              {resumeData.skills.some(skill => skill) && (
+                <div className="mb-6">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-purple-200 mb-3">Skills</h3>
+                  <div className="space-y-2">
+                    {resumeData.skills.filter(s => s).map((skill, index) => (
+                      <div key={index} className="text-sm">
+                        <span>{skill}</span>
+                        <div className="h-1 bg-purple-500 rounded-full mt-1">
+                          <div className="h-full bg-white rounded-full" style={{ width: '80%' }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {resumeData.interests.some(interest => interest) && (
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-purple-200 mb-3">Interests</h3>
+                  <div className="flex flex-wrap gap-1">
+                    {resumeData.interests.filter(i => i).map((interest, index) => (
+                      <span key={index} className="px-2 py-1 bg-purple-600 rounded text-xs">{interest}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            <div className="w-2/3 p-6">
+              {resumeData.education.some(edu => edu.institution) && (
+                <div className="mb-6">
+                  <h2 className="text-lg font-bold text-purple-700 mb-3 pb-1 border-b-2 border-purple-200">Education</h2>
+                  {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
+                    <div key={index} className="mb-3">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <div className="font-semibold text-gray-900">{edu.institution}</div>
+                          <div className="text-gray-700 text-sm">{edu.degree}{edu.field && ` in ${edu.field}`}</div>
+                        </div>
+                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">{edu.startYear} - {edu.endYear}</span>
+                      </div>
+                      {edu.grade && <div className="text-sm text-gray-500 mt-1">{edu.grade}</div>}
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {resumeData.experience.some(exp => exp.company) && (
+                <div>
+                  <h2 className="text-lg font-bold text-purple-700 mb-3 pb-1 border-b-2 border-purple-200">Experience</h2>
+                  {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
+                    <div key={index} className="mb-4">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <div className="font-semibold text-gray-900">{exp.role}</div>
+                          <div className="text-gray-700 text-sm">{exp.company}</div>
+                        </div>
+                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">{exp.startDate} - {exp.endDate}</span>
+                      </div>
+                      {exp.description && <p className="text-gray-600 mt-2 text-sm">{exp.description}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )
+
+      case 'executive':
+        return (
+          <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+            <div className="bg-teal-700 text-white p-8">
+              <h1 className="text-3xl font-bold mb-2">{resumeData.personalInfo.fullName || 'Your Name'}</h1>
+              <div className="flex flex-wrap gap-4 text-sm text-teal-100">
+                {resumeData.personalInfo.email && <span className="flex items-center gap-1"><Mail className="w-3 h-3" /> {resumeData.personalInfo.email}</span>}
+                {resumeData.personalInfo.phone && <span className="flex items-center gap-1"><Phone className="w-3 h-3" /> {resumeData.personalInfo.phone}</span>}
+                {resumeData.personalInfo.linkedin && <span className="flex items-center gap-1"><Linkedin className="w-3 h-3" /> {resumeData.personalInfo.linkedin}</span>}
+                {resumeData.personalInfo.portfolio && <span className="flex items-center gap-1"><Globe className="w-3 h-3" /> {resumeData.personalInfo.portfolio}</span>}
+              </div>
+            </div>
+            
+            <div className="p-8">
+              <div className="grid grid-cols-3 gap-8">
+                <div className="col-span-2">
+                  {resumeData.experience.some(exp => exp.company) && (
+                    <div className="mb-6">
+                      <h2 className="text-lg font-bold text-teal-700 mb-4 flex items-center gap-2">
+                        <Briefcase className="w-5 h-5" /> Professional Experience
+                      </h2>
+                      {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
+                        <div key={index} className="mb-4 pb-4 border-b border-gray-100 last:border-0">
+                          <div className="flex justify-between items-start mb-1">
+                            <span className="font-semibold text-gray-900">{exp.role}</span>
+                            <span className="text-sm text-teal-600 font-medium">{exp.startDate} - {exp.endDate}</span>
+                          </div>
+                          <div className="text-gray-600 mb-2">{exp.company}</div>
+                          {exp.description && <p className="text-gray-500 text-sm">{exp.description}</p>}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {resumeData.education.some(edu => edu.institution) && (
+                    <div>
+                      <h2 className="text-lg font-bold text-teal-700 mb-4 flex items-center gap-2">
+                        <GraduationCap className="w-5 h-5" /> Education
+                      </h2>
+                      {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
+                        <div key={index} className="mb-3">
+                          <div className="flex justify-between items-start">
+                            <span className="font-semibold text-gray-900">{edu.institution}</span>
+                            <span className="text-sm text-teal-600">{edu.startYear} - {edu.endYear}</span>
+                          </div>
+                          <div className="text-gray-600">{edu.degree}{edu.field && ` in ${edu.field}`}</div>
+                          {edu.grade && <div className="text-gray-400 text-sm">{edu.grade}</div>}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                <div className="bg-teal-50 p-4 rounded-lg h-fit">
+                  {resumeData.skills.some(skill => skill) && (
+                    <div className="mb-6">
+                      <h3 className="text-sm font-bold text-teal-700 uppercase tracking-wider mb-3">Skills</h3>
+                      <div className="space-y-2">
+                        {resumeData.skills.filter(s => s).map((skill, index) => (
+                          <div key={index} className="flex items-center gap-2 text-sm text-gray-700">
+                            <Check className="w-3 h-3 text-teal-600" />
+                            {skill}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {resumeData.interests.some(interest => interest) && (
+                    <div>
+                      <h3 className="text-sm font-bold text-teal-700 uppercase tracking-wider mb-3">Interests</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {resumeData.interests.filter(i => i).map((interest, index) => (
+                          <span key={index} className="px-2 py-1 bg-white text-gray-600 rounded text-xs border border-teal-200">
+                            {interest}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      default:
+        return null
+    }
   }
 
   return (
@@ -305,81 +773,8 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
 
         {/* Step Content */}
         <div className="max-w-3xl mx-auto">
-          {/* Step 1: Style Selection */}
+          {/* Step 1: Personal Information */}
           {step === 1 && (
-            <div className="space-y-6">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-foreground mb-2">Choose Your Resume Style</h2>
-                <p className="text-muted-foreground">Select a template that best represents your professional brand</p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {resumeStyles.map((style) => (
-                  <Card 
-                    key={style.id}
-                    className={`cursor-pointer transition-all hover:shadow-lg ${
-                      resumeData.style === style.id 
-                        ? "ring-2 ring-primary border-primary" 
-                        : "border-border hover:border-primary/50"
-                    }`}
-                    onClick={() => setResumeData(prev => ({ ...prev, style: style.id }))}
-                  >
-                    <CardContent className="p-6">
-                      {/* Style Preview */}
-                      <div 
-                        className="aspect-[3/4] rounded-lg mb-4 relative overflow-hidden"
-                        style={{ backgroundColor: style.colors.primary }}
-                      >
-                        <div className="absolute inset-0 p-3">
-                          {/* Mini resume preview */}
-                          <div className="h-full bg-white rounded shadow-sm p-2">
-                            <div 
-                              className="h-4 rounded mb-2"
-                              style={{ backgroundColor: style.colors.primary, width: '60%' }}
-                            />
-                            <div className="h-1.5 bg-gray-200 rounded mb-1 w-full" />
-                            <div className="h-1.5 bg-gray-200 rounded mb-1 w-4/5" />
-                            <div className="h-1.5 bg-gray-200 rounded mb-3 w-3/5" />
-                            
-                            <div 
-                              className="h-2 rounded mb-2"
-                              style={{ backgroundColor: style.colors.secondary, width: '40%' }}
-                            />
-                            <div className="h-1 bg-gray-100 rounded mb-1 w-full" />
-                            <div className="h-1 bg-gray-100 rounded mb-1 w-full" />
-                            <div className="h-1 bg-gray-100 rounded mb-3 w-4/5" />
-                            
-                            <div 
-                              className="h-2 rounded mb-2"
-                              style={{ backgroundColor: style.colors.secondary, width: '40%' }}
-                            />
-                            <div className="h-1 bg-gray-100 rounded mb-1 w-full" />
-                            <div className="h-1 bg-gray-100 rounded w-3/4" />
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="text-center">
-                        <h3 className="font-semibold text-foreground mb-1">{style.name}</h3>
-                        <p className="text-sm text-muted-foreground">{style.description}</p>
-                      </div>
-                      
-                      {resumeData.style === style.id && (
-                        <div className="mt-3 flex justify-center">
-                          <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">
-                            Selected
-                          </span>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Step 2: Personal Information */}
-          {step === 2 && (
             <div className="space-y-6">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-foreground mb-2">Personal Information</h2>
@@ -458,8 +853,8 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
             </div>
           )}
 
-          {/* Step 3: Education */}
-          {step === 3 && (
+          {/* Step 2: Education */}
+          {step === 2 && (
             <div className="space-y-6">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-foreground mb-2">Educational Details</h2>
@@ -554,8 +949,8 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
             </div>
           )}
 
-          {/* Step 4: Experience */}
-          {step === 4 && (
+          {/* Step 3: Experience */}
+          {step === 3 && (
             <div className="space-y-6">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-foreground mb-2">Work Experience</h2>
@@ -662,8 +1057,8 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
             </div>
           )}
 
-          {/* Step 5: Skills & Interests */}
-          {step === 5 && (
+          {/* Step 4: Skills & Interests */}
+          {step === 4 && (
             <div className="space-y-6">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-foreground mb-2">Skills & Interests</h2>
@@ -742,6 +1137,91 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
             </div>
           )}
 
+          {/* Step 5: Template Selection */}
+          {step === 5 && (
+            <div className="space-y-6">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold text-foreground mb-2">Choose Your Template</h2>
+                <p className="text-muted-foreground">Select a professional design inspired by top resume platforms</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {resumeTemplates.map((template) => (
+                  <Card 
+                    key={template.id}
+                    className={`cursor-pointer transition-all hover:shadow-lg ${
+                      resumeData.style === template.id 
+                        ? "ring-2 ring-primary border-primary" 
+                        : "border-border hover:border-primary/50"
+                    }`}
+                    onClick={() => setResumeData(prev => ({ ...prev, style: template.id }))}
+                  >
+                    <CardContent className="p-4">
+                      {/* Template Preview */}
+                      <div 
+                        className="aspect-[3/4] rounded-lg mb-3 relative overflow-hidden border border-border"
+                        style={{ backgroundColor: '#f8f9fa' }}
+                      >
+                        <div className="absolute inset-0 p-2">
+                          <div className="h-full bg-white rounded shadow-sm overflow-hidden">
+                            {/* Mini preview based on template */}
+                            <div 
+                              className="h-6"
+                              style={{ backgroundColor: template.colors.primary }}
+                            />
+                            <div className="p-2">
+                              <div 
+                                className="h-2 rounded mb-1.5"
+                                style={{ backgroundColor: template.colors.primary, width: '50%' }}
+                              />
+                              <div className="h-1 bg-gray-200 rounded mb-0.5 w-full" />
+                              <div className="h-1 bg-gray-200 rounded mb-0.5 w-4/5" />
+                              <div className="h-1 bg-gray-200 rounded mb-2 w-3/5" />
+                              
+                              <div 
+                                className="h-1.5 rounded mb-1"
+                                style={{ backgroundColor: template.colors.secondary, width: '35%' }}
+                              />
+                              <div className="h-0.5 bg-gray-100 rounded mb-0.5 w-full" />
+                              <div className="h-0.5 bg-gray-100 rounded mb-0.5 w-full" />
+                              <div className="h-0.5 bg-gray-100 rounded mb-2 w-3/4" />
+                              
+                              <div 
+                                className="h-1.5 rounded mb-1"
+                                style={{ backgroundColor: template.colors.secondary, width: '35%' }}
+                              />
+                              <div className="h-0.5 bg-gray-100 rounded mb-0.5 w-full" />
+                              <div className="h-0.5 bg-gray-100 rounded w-4/5" />
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {resumeData.style === template.id && (
+                          <div className="absolute top-2 right-2">
+                            <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                              <Check className="w-4 h-4 text-primary-foreground" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <h3 className="font-semibold text-foreground">{template.name}</h3>
+                          <span className="text-xs text-muted-foreground flex items-center gap-1">
+                            <ExternalLink className="w-3 h-3" />
+                            {template.source}
+                          </span>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{template.description}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Step 6: Preview & Download */}
           {step === 6 && (
             <div className="space-y-6">
@@ -772,8 +1252,11 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
               {/* Resume Preview */}
               <Card className="border-border overflow-hidden">
                 <CardContent className="p-0">
-                  <div className="bg-muted p-4 border-b border-border">
+                  <div className="bg-muted p-4 border-b border-border flex items-center justify-between">
                     <span className="text-sm font-medium text-muted-foreground">Resume Preview</span>
+                    <span className="text-xs text-muted-foreground px-2 py-1 bg-background rounded">
+                      {getSelectedTemplate().name} Template
+                    </span>
                   </div>
                   <div className="p-4 bg-gray-100 dark:bg-gray-900">
                     <div 
@@ -781,347 +1264,7 @@ export function ResumeBuilder({ onBack }: ResumeBuilderProps) {
                       className="bg-white shadow-lg mx-auto"
                       style={{ width: '100%', maxWidth: '8.5in', minHeight: '11in' }}
                     >
-                      {/* Classic Style */}
-                      {resumeData.style === 'classic' && (
-                        <div className="p-8" style={{ fontFamily: 'Georgia, serif' }}>
-                          {/* Header */}
-                          <div className="text-center border-b-2 border-gray-800 pb-4 mb-6">
-                            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                              {resumeData.personalInfo.fullName || 'Your Name'}
-                            </h1>
-                            <div className="flex items-center justify-center flex-wrap gap-4 text-sm text-gray-600">
-                              {resumeData.personalInfo.email && (
-                                <span className="flex items-center gap-1">
-                                  <Mail className="w-3 h-3" /> {resumeData.personalInfo.email}
-                                </span>
-                              )}
-                              {resumeData.personalInfo.phone && (
-                                <span className="flex items-center gap-1">
-                                  <Phone className="w-3 h-3" /> {resumeData.personalInfo.phone}
-                                </span>
-                              )}
-                              {resumeData.personalInfo.linkedin && (
-                                <span className="flex items-center gap-1">
-                                  <Linkedin className="w-3 h-3" /> {resumeData.personalInfo.linkedin}
-                                </span>
-                              )}
-                              {resumeData.personalInfo.portfolio && (
-                                <span className="flex items-center gap-1">
-                                  <Globe className="w-3 h-3" /> {resumeData.personalInfo.portfolio}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          
-                          {/* Education */}
-                          {resumeData.education.some(edu => edu.institution) && (
-                            <div className="mb-6">
-                              <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
-                                EDUCATION
-                              </h2>
-                              {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
-                                <div key={index} className="mb-3">
-                                  <div className="flex justify-between">
-                                    <strong className="text-gray-900">{edu.institution}</strong>
-                                    <span className="text-gray-600">{edu.startYear} - {edu.endYear}</span>
-                                  </div>
-                                  <div className="text-gray-700">
-                                    {edu.degree}{edu.field && ` in ${edu.field}`}
-                                    {edu.grade && ` | ${edu.grade}`}
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                          
-                          {/* Experience */}
-                          {resumeData.experience.some(exp => exp.company) && (
-                            <div className="mb-6">
-                              <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
-                                EXPERIENCE
-                              </h2>
-                              {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
-                                <div key={index} className="mb-3">
-                                  <div className="flex justify-between">
-                                    <strong className="text-gray-900">{exp.role}</strong>
-                                    <span className="text-gray-600">{exp.startDate} - {exp.endDate}</span>
-                                  </div>
-                                  <div className="text-gray-700 italic">{exp.company}</div>
-                                  {exp.description && (
-                                    <p className="text-gray-600 mt-1 text-sm">{exp.description}</p>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                          
-                          {/* Skills */}
-                          {resumeData.skills.some(skill => skill) && (
-                            <div className="mb-6">
-                              <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
-                                SKILLS
-                              </h2>
-                              <p className="text-gray-700">
-                                {resumeData.skills.filter(s => s).join(' • ')}
-                              </p>
-                            </div>
-                          )}
-                          
-                          {/* Interests */}
-                          {resumeData.interests.some(interest => interest) && (
-                            <div>
-                              <h2 className="text-lg font-bold text-gray-900 border-b border-gray-300 pb-1 mb-3">
-                                INTERESTS
-                              </h2>
-                              <p className="text-gray-700">
-                                {resumeData.interests.filter(i => i).join(' • ')}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      
-                      {/* Modern Style */}
-                      {resumeData.style === 'modern' && (
-                        <div style={{ fontFamily: 'system-ui, sans-serif' }}>
-                          {/* Header */}
-                          <div className="bg-blue-600 text-white p-8">
-                            <h1 className="text-3xl font-bold mb-2">
-                              {resumeData.personalInfo.fullName || 'Your Name'}
-                            </h1>
-                            <div className="flex flex-wrap gap-4 text-sm text-blue-100">
-                              {resumeData.personalInfo.email && (
-                                <span className="flex items-center gap-1">
-                                  <Mail className="w-3 h-3" /> {resumeData.personalInfo.email}
-                                </span>
-                              )}
-                              {resumeData.personalInfo.phone && (
-                                <span className="flex items-center gap-1">
-                                  <Phone className="w-3 h-3" /> {resumeData.personalInfo.phone}
-                                </span>
-                              )}
-                              {resumeData.personalInfo.linkedin && (
-                                <span className="flex items-center gap-1">
-                                  <Linkedin className="w-3 h-3" /> {resumeData.personalInfo.linkedin}
-                                </span>
-                              )}
-                              {resumeData.personalInfo.portfolio && (
-                                <span className="flex items-center gap-1">
-                                  <Globe className="w-3 h-3" /> {resumeData.personalInfo.portfolio}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          
-                          <div className="p-8">
-                            {/* Education */}
-                            {resumeData.education.some(edu => edu.institution) && (
-                              <div className="mb-6">
-                                <h2 className="text-lg font-bold text-blue-600 mb-3 flex items-center gap-2">
-                                  <GraduationCap className="w-5 h-5" /> Education
-                                </h2>
-                                {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
-                                  <div key={index} className="mb-3 pl-4 border-l-2 border-blue-200">
-                                    <div className="font-semibold text-gray-900">{edu.institution}</div>
-                                    <div className="text-gray-700">
-                                      {edu.degree}{edu.field && ` in ${edu.field}`}
-                                    </div>
-                                    <div className="text-sm text-gray-500">
-                                      {edu.startYear} - {edu.endYear}
-                                      {edu.grade && ` | ${edu.grade}`}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                            
-                            {/* Experience */}
-                            {resumeData.experience.some(exp => exp.company) && (
-                              <div className="mb-6">
-                                <h2 className="text-lg font-bold text-blue-600 mb-3 flex items-center gap-2">
-                                  <Briefcase className="w-5 h-5" /> Experience
-                                </h2>
-                                {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
-                                  <div key={index} className="mb-3 pl-4 border-l-2 border-blue-200">
-                                    <div className="font-semibold text-gray-900">{exp.role}</div>
-                                    <div className="text-gray-700">{exp.company}</div>
-                                    <div className="text-sm text-gray-500">{exp.startDate} - {exp.endDate}</div>
-                                    {exp.description && (
-                                      <p className="text-gray-600 mt-1 text-sm">{exp.description}</p>
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                            
-                            {/* Skills */}
-                            {resumeData.skills.some(skill => skill) && (
-                              <div className="mb-6">
-                                <h2 className="text-lg font-bold text-blue-600 mb-3 flex items-center gap-2">
-                                  <Sparkles className="w-5 h-5" /> Skills
-                                </h2>
-                                <div className="flex flex-wrap gap-2">
-                                  {resumeData.skills.filter(s => s).map((skill, index) => (
-                                    <span key={index} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm">
-                                      {skill}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                            
-                            {/* Interests */}
-                            {resumeData.interests.some(interest => interest) && (
-                              <div>
-                                <h2 className="text-lg font-bold text-blue-600 mb-3 flex items-center gap-2">
-                                  <FileText className="w-5 h-5" /> Interests
-                                </h2>
-                                <div className="flex flex-wrap gap-2">
-                                  {resumeData.interests.filter(i => i).map((interest, index) => (
-                                    <span key={index} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                                      {interest}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                      
-                      {/* Creative Style */}
-                      {resumeData.style === 'creative' && (
-                        <div className="flex" style={{ fontFamily: 'system-ui, sans-serif', minHeight: '11in' }}>
-                          {/* Sidebar */}
-                          <div className="w-1/3 bg-purple-700 text-white p-6">
-                            <div className="mb-8">
-                              <div className="w-24 h-24 rounded-full bg-purple-500 mx-auto mb-4 flex items-center justify-center text-3xl font-bold">
-                                {resumeData.personalInfo.fullName?.charAt(0) || 'N'}
-                              </div>
-                              <h1 className="text-xl font-bold text-center">
-                                {resumeData.personalInfo.fullName || 'Your Name'}
-                              </h1>
-                            </div>
-                            
-                            {/* Contact */}
-                            <div className="mb-6">
-                              <h3 className="text-sm font-bold uppercase tracking-wider text-purple-200 mb-3">Contact</h3>
-                              <div className="space-y-2 text-sm">
-                                {resumeData.personalInfo.email && (
-                                  <div className="flex items-center gap-2">
-                                    <Mail className="w-3 h-3" />
-                                    <span className="break-all">{resumeData.personalInfo.email}</span>
-                                  </div>
-                                )}
-                                {resumeData.personalInfo.phone && (
-                                  <div className="flex items-center gap-2">
-                                    <Phone className="w-3 h-3" />
-                                    <span>{resumeData.personalInfo.phone}</span>
-                                  </div>
-                                )}
-                                {resumeData.personalInfo.linkedin && (
-                                  <div className="flex items-center gap-2">
-                                    <Linkedin className="w-3 h-3" />
-                                    <span className="break-all">{resumeData.personalInfo.linkedin}</span>
-                                  </div>
-                                )}
-                                {resumeData.personalInfo.portfolio && (
-                                  <div className="flex items-center gap-2">
-                                    <Globe className="w-3 h-3" />
-                                    <span className="break-all">{resumeData.personalInfo.portfolio}</span>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                            
-                            {/* Skills */}
-                            {resumeData.skills.some(skill => skill) && (
-                              <div className="mb-6">
-                                <h3 className="text-sm font-bold uppercase tracking-wider text-purple-200 mb-3">Skills</h3>
-                                <div className="space-y-2">
-                                  {resumeData.skills.filter(s => s).map((skill, index) => (
-                                    <div key={index} className="text-sm">
-                                      <span>{skill}</span>
-                                      <div className="h-1 bg-purple-500 rounded-full mt-1">
-                                        <div className="h-full bg-white rounded-full" style={{ width: '80%' }} />
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                            
-                            {/* Interests */}
-                            {resumeData.interests.some(interest => interest) && (
-                              <div>
-                                <h3 className="text-sm font-bold uppercase tracking-wider text-purple-200 mb-3">Interests</h3>
-                                <div className="flex flex-wrap gap-1">
-                                  {resumeData.interests.filter(i => i).map((interest, index) => (
-                                    <span key={index} className="px-2 py-1 bg-purple-600 rounded text-xs">
-                                      {interest}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                          
-                          {/* Main Content */}
-                          <div className="w-2/3 p-6">
-                            {/* Education */}
-                            {resumeData.education.some(edu => edu.institution) && (
-                              <div className="mb-6">
-                                <h2 className="text-lg font-bold text-purple-700 mb-3 pb-1 border-b-2 border-purple-200">
-                                  Education
-                                </h2>
-                                {resumeData.education.filter(edu => edu.institution).map((edu, index) => (
-                                  <div key={index} className="mb-3">
-                                    <div className="flex justify-between items-start">
-                                      <div>
-                                        <div className="font-semibold text-gray-900">{edu.institution}</div>
-                                        <div className="text-gray-700 text-sm">
-                                          {edu.degree}{edu.field && ` in ${edu.field}`}
-                                        </div>
-                                      </div>
-                                      <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">
-                                        {edu.startYear} - {edu.endYear}
-                                      </span>
-                                    </div>
-                                    {edu.grade && (
-                                      <div className="text-sm text-gray-500 mt-1">{edu.grade}</div>
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                            
-                            {/* Experience */}
-                            {resumeData.experience.some(exp => exp.company) && (
-                              <div>
-                                <h2 className="text-lg font-bold text-purple-700 mb-3 pb-1 border-b-2 border-purple-200">
-                                  Experience
-                                </h2>
-                                {resumeData.experience.filter(exp => exp.company).map((exp, index) => (
-                                  <div key={index} className="mb-4">
-                                    <div className="flex justify-between items-start">
-                                      <div>
-                                        <div className="font-semibold text-gray-900">{exp.role}</div>
-                                        <div className="text-gray-700 text-sm">{exp.company}</div>
-                                      </div>
-                                      <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">
-                                        {exp.startDate} - {exp.endDate}
-                                      </span>
-                                    </div>
-                                    {exp.description && (
-                                      <p className="text-gray-600 mt-2 text-sm">{exp.description}</p>
-                                    )}
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
+                      {renderResumePreview()}
                     </div>
                   </div>
                 </CardContent>
