@@ -38,7 +38,13 @@ export function HeroSection() {
 
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 h-14 px-8 text-lg">
+            <Button 
+              size="lg" 
+              className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 h-14 px-8 text-lg"
+              onClick={() => {
+                document.getElementById('features-section')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
               Start Your Journey
               <ArrowRight className="w-5 h-5" />
             </Button>

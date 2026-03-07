@@ -109,7 +109,7 @@ export function FeatureCards() {
   }
 
   return (
-    <section className="py-20 px-4">
+    <section id="features-section" className="py-20 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
