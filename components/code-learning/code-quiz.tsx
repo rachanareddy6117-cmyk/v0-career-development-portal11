@@ -115,6 +115,38 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       hint: "One of these is actually a class"
     },
   ],
+  c: [
+    {
+      question: "What is the correct file extension for C source files?",
+      options: [".c", ".cpp", ".h", ".cs"],
+      correct: 0,
+      hint: "C uses a simple single letter extension"
+    },
+    {
+      question: "Which header file is required for printf()?",
+      options: ["<stdlib.h>", "<stdio.h>", "<string.h>", "<conio.h>"],
+      correct: 1,
+      hint: "stdio stands for standard input/output"
+    },
+    {
+      question: "What does the '&' operator do in C?",
+      options: ["Logical AND", "Returns address of variable", "Bitwise OR", "Pointer declaration"],
+      correct: 1,
+      hint: "It's used with scanf() to pass variable addresses"
+    },
+    {
+      question: "Which is the correct way to declare a pointer in C?",
+      options: ["int ptr;", "int *ptr;", "pointer int ptr;", "int &ptr;"],
+      correct: 1,
+      hint: "The asterisk (*) is used for pointer declaration"
+    },
+    {
+      question: "What is the size of 'int' in C (typically on 32-bit systems)?",
+      options: ["2 bytes", "4 bytes", "8 bytes", "Depends on compiler"],
+      correct: 1,
+      hint: "It's usually 4 bytes on most modern systems"
+    },
+  ],
   cpp: [
     {
       question: "What is the correct file extension for C++ files?",

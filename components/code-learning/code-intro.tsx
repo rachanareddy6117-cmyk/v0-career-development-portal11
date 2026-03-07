@@ -11,6 +11,7 @@ const languages = [
   { id: "python", name: "Python", icon: "🐍", color: "from-yellow-500 to-blue-500", desc: "Great for beginners" },
   { id: "javascript", name: "JavaScript", icon: "⚡", color: "from-yellow-400 to-yellow-600", desc: "Web development" },
   { id: "java", name: "Java", icon: "☕", color: "from-red-500 to-orange-500", desc: "Enterprise apps" },
+  { id: "c", name: "C", icon: "🔷", color: "from-gray-500 to-blue-600", desc: "Foundation of programming" },
   { id: "cpp", name: "C++", icon: "⚙️", color: "from-blue-500 to-blue-700", desc: "System programming" },
   { id: "csharp", name: "C#", icon: "🎮", color: "from-purple-500 to-purple-700", desc: "Game development" },
   { id: "go", name: "Go", icon: "🔵", color: "from-cyan-400 to-cyan-600", desc: "Cloud & backend" },
