@@ -80,6 +80,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       correct: 2,
       hint: "It's short for 'define'"
     },
+    {
+      question: "What is the output of [1, 2, 3][-1]?",
+      options: ["1", "3", "Error", "-1"],
+      correct: 1,
+      hint: "Negative indexing starts from the end"
+    },
+    {
+      question: "Which method removes whitespace from both ends of a string?",
+      options: ["trim()", "strip()", "clean()", "remove()"],
+      correct: 1,
+      hint: "Think about stripping away the extra characters"
+    },
+    {
+      question: "What does 'is' operator check in Python?",
+      options: ["Value equality", "Identity (same object)", "Type equality", "String comparison"],
+      correct: 1,
+      hint: "It checks if two variables point to the same object in memory"
+    },
+    {
+      question: "How do you handle exceptions in Python?",
+      options: ["try/catch", "try/except", "catch/throw", "handle/error"],
+      correct: 1,
+      hint: "Python uses a different keyword than most languages"
+    },
+    {
+      question: "What is a lambda function?",
+      options: ["A named function", "An anonymous function", "A recursive function", "A generator function"],
+      correct: 1,
+      hint: "Lambda functions don't have a name"
+    },
   ],
   javascript: [
     {
@@ -141,6 +171,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       options: ["The function itself", "Global object or caller", "undefined always", "The parent function"],
       correct: 1,
       hint: "It depends on how the function is called"
+    },
+    {
+      question: "What does the spread operator (...) do?",
+      options: ["Multiplies values", "Expands an iterable into elements", "Creates a loop", "Defines a rest parameter only"],
+      correct: 1,
+      hint: "It 'spreads' out the elements"
+    },
+    {
+      question: "What is a Promise in JavaScript?",
+      options: ["A guaranteed value", "An object representing eventual completion", "A synchronous operation", "A type of loop"],
+      correct: 1,
+      hint: "It represents a value that may be available now, later, or never"
+    },
+    {
+      question: "What does 'async/await' help with?",
+      options: ["Synchronous code", "Asynchronous code readability", "Error handling only", "Memory management"],
+      correct: 1,
+      hint: "It makes asynchronous code look synchronous"
+    },
+    {
+      question: "What is the output of [1, 2, 3].map(x => x * 2)?",
+      options: ["[1, 2, 3]", "[2, 4, 6]", "6", "[1, 4, 9]"],
+      correct: 1,
+      hint: "map() applies the function to each element"
+    },
+    {
+      question: "What does Object.keys({a: 1, b: 2}) return?",
+      options: ["[1, 2]", "['a', 'b']", "{a, b}", "['a': 1, 'b': 2]"],
+      correct: 1,
+      hint: "It returns the keys, not the values"
     },
   ],
   java: [
@@ -204,6 +264,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       correct: 1,
       hint: "Integer division truncates the decimal"
     },
+    {
+      question: "What is an interface in Java?",
+      options: ["A class with implementation", "A contract with method signatures", "A type of variable", "An abstract class"],
+      correct: 1,
+      hint: "It defines what methods a class must implement"
+    },
+    {
+      question: "What does 'super' keyword do?",
+      options: ["Creates a superclass", "References parent class", "Makes a variable public", "Calls main method"],
+      correct: 1,
+      hint: "It's used to access parent class members"
+    },
+    {
+      question: "What is autoboxing in Java?",
+      options: ["Automatic packaging", "Converting primitive to wrapper", "Creating objects automatically", "Memory management"],
+      correct: 1,
+      hint: "int becomes Integer automatically"
+    },
+    {
+      question: "Which exception is checked at compile time?",
+      options: ["NullPointerException", "ArrayIndexOutOfBoundsException", "IOException", "ArithmeticException"],
+      correct: 2,
+      hint: "File operations throw this type of exception"
+    },
+    {
+      question: "What is the purpose of 'synchronized' keyword?",
+      options: ["Speed up execution", "Prevent thread interference", "Create threads", "Handle exceptions"],
+      correct: 1,
+      hint: "It's used for thread safety"
+    },
   ],
   c: [
     {
@@ -265,6 +355,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       options: [".", "->", "*", "&"],
       correct: 1,
       hint: "It looks like an arrow"
+    },
+    {
+      question: "What is a void pointer in C?",
+      options: ["A null pointer", "A pointer that points to nothing", "A generic pointer type", "An invalid pointer"],
+      correct: 2,
+      hint: "void* can point to any data type"
+    },
+    {
+      question: "What does the 'const' keyword do for a pointer?",
+      options: ["Makes pointer NULL", "Prevents modification of pointed value", "Allocates memory", "Frees memory"],
+      correct: 1,
+      hint: "It makes the value read-only"
+    },
+    {
+      question: "What is the difference between ++i and i++?",
+      options: ["No difference", "++i increments before use, i++ after", "i++ is faster", "++i is deprecated"],
+      correct: 1,
+      hint: "Pre-increment vs post-increment"
+    },
+    {
+      question: "What does 'typedef' do in C?",
+      options: ["Defines a function", "Creates an alias for a type", "Declares a variable", "Includes a header"],
+      correct: 1,
+      hint: "It creates a new name for an existing type"
+    },
+    {
+      question: "What is the purpose of #include in C?",
+      options: ["Define a macro", "Include header files", "Create a function", "Declare variables"],
+      correct: 1,
+      hint: "It brings in external code definitions"
     },
   ],
   cpp: [
@@ -328,6 +448,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       correct: 2,
       hint: "It's like a dynamic array"
     },
+    {
+      question: "What is RAII in C++?",
+      options: ["A design pattern", "Resource Acquisition Is Initialization", "A compiler feature", "A memory leak"],
+      correct: 1,
+      hint: "Resources are tied to object lifetime"
+    },
+    {
+      question: "What does 'const' after a member function mean?",
+      options: ["Function returns const", "Function doesn't modify object", "Function is static", "Function is inline"],
+      correct: 1,
+      hint: "It promises not to change member variables"
+    },
+    {
+      question: "What is a smart pointer?",
+      options: ["A faster pointer", "A pointer with automatic memory management", "A pointer to functions", "A constant pointer"],
+      correct: 1,
+      hint: "unique_ptr and shared_ptr are examples"
+    },
+    {
+      question: "What does 'template' keyword enable?",
+      options: ["Code formatting", "Generic programming", "Memory templates", "Class inheritance"],
+      correct: 1,
+      hint: "It allows writing code that works with any data type"
+    },
+    {
+      question: "What is the difference between struct and class in C++?",
+      options: ["No difference", "Default access: struct public, class private", "struct can't have methods", "class can't have members"],
+      correct: 1,
+      hint: "It's about default member accessibility"
+    },
   ],
   csharp: [
     {
@@ -390,6 +540,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       correct: 1,
       hint: "You try and then..."
     },
+    {
+      question: "What is a property in C#?",
+      options: ["A field", "A getter/setter pair", "A method", "A constant"],
+      correct: 1,
+      hint: "It provides controlled access to a field"
+    },
+    {
+      question: "What does 'using' statement do for resources?",
+      options: ["Imports namespaces", "Ensures proper disposal", "Creates variables", "Defines scope"],
+      correct: 1,
+      hint: "It calls Dispose() automatically"
+    },
+    {
+      question: "What is an extension method?",
+      options: ["A method that extends execution time", "A method added to existing types", "An overridden method", "A recursive method"],
+      correct: 1,
+      hint: "It adds functionality to types you don't own"
+    },
+    {
+      question: "What is the null-coalescing operator (??) used for?",
+      options: ["Null checking", "Providing default value if null", "Throwing exceptions", "Type casting"],
+      correct: 1,
+      hint: "a ?? b returns a if not null, otherwise b"
+    },
+    {
+      question: "What is a partial class?",
+      options: ["An incomplete class", "A class split across multiple files", "An abstract class", "A sealed class"],
+      correct: 1,
+      hint: "Multiple developers can work on the same class"
+    },
   ],
   go: [
     {
@@ -451,6 +631,404 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       options: ["class", "type", "struct", "new"],
       correct: 1,
       hint: "You use 'type' followed by the name and definition"
+    },
+    {
+      question: "What is a method receiver in Go?",
+      options: ["A parameter", "A type that a method belongs to", "A return value", "An interface"],
+      correct: 1,
+      hint: "It's how Go implements methods on types"
+    },
+    {
+      question: "What does 'make' function do?",
+      options: ["Creates files", "Initializes slices, maps, channels", "Compiles code", "Creates pointers"],
+      correct: 1,
+      hint: "It's used for built-in reference types"
+    },
+    {
+      question: "What is an interface in Go?",
+      options: ["A class", "A set of method signatures", "A struct", "A package"],
+      correct: 1,
+      hint: "Types implicitly implement interfaces"
+    },
+    {
+      question: "What does 'select' statement do?",
+      options: ["Chooses a value", "Waits on multiple channel operations", "Filters data", "Creates goroutines"],
+      correct: 1,
+      hint: "It's like switch but for channels"
+    },
+    {
+      question: "What is the blank identifier (_) used for?",
+      options: ["Comments", "Ignoring values", "Private variables", "Constants"],
+      correct: 1,
+      hint: "It discards values you don't need"
+    },
+  ],
+  react: [
+    {
+      question: "What is JSX in React?",
+      options: ["A programming language", "A syntax extension for JavaScript", "A CSS framework", "A testing library"],
+      correct: 1,
+      hint: "It looks like HTML but compiles to JavaScript"
+    },
+    {
+      question: "What hook is used to manage state in functional components?",
+      options: ["useEffect", "useState", "useContext", "useReducer"],
+      correct: 1,
+      hint: "It's the most basic state hook"
+    },
+    {
+      question: "What does useEffect hook do?",
+      options: ["Manages state", "Handles side effects", "Creates components", "Routes pages"],
+      correct: 1,
+      hint: "Data fetching, subscriptions, DOM changes"
+    },
+    {
+      question: "What is a React component?",
+      options: ["A CSS class", "A reusable piece of UI", "A database query", "A server endpoint"],
+      correct: 1,
+      hint: "Components are the building blocks of React apps"
+    },
+    {
+      question: "What is the virtual DOM?",
+      options: ["A real DOM copy", "A lightweight JS representation of DOM", "A browser feature", "A React component"],
+      correct: 1,
+      hint: "React uses it for efficient updates"
+    },
+    {
+      question: "What is prop drilling?",
+      options: ["Creating props", "Passing props through many levels", "Destructuring props", "Validating props"],
+      correct: 1,
+      hint: "It's a common problem solved by Context"
+    },
+    {
+      question: "What does 'key' prop do in lists?",
+      options: ["Styles elements", "Helps React identify elements", "Sorts elements", "Filters elements"],
+      correct: 1,
+      hint: "It should be unique among siblings"
+    },
+    {
+      question: "What is React.memo used for?",
+      options: ["Memory allocation", "Memoizing components to prevent re-renders", "Creating memos", "State management"],
+      correct: 1,
+      hint: "It's a performance optimization"
+    },
+    {
+      question: "What is the difference between controlled and uncontrolled components?",
+      options: ["Size difference", "State managed by React vs DOM", "Performance difference", "Styling difference"],
+      correct: 1,
+      hint: "It's about who controls the input value"
+    },
+    {
+      question: "What does useCallback hook return?",
+      options: ["A value", "A memoized callback function", "A state", "A ref"],
+      correct: 1,
+      hint: "It prevents unnecessary function re-creations"
+    },
+    {
+      question: "What is the purpose of useRef?",
+      options: ["Create references to DOM elements", "Manage global state", "Handle routing", "Fetch data"],
+      correct: 0,
+      hint: "It can also store mutable values that don't trigger re-renders"
+    },
+    {
+      question: "What is a custom hook?",
+      options: ["A built-in React hook", "A reusable function using hooks", "A class method", "A lifecycle method"],
+      correct: 1,
+      hint: "Custom hooks start with 'use'"
+    },
+    {
+      question: "What is the Context API used for?",
+      options: ["Styling", "Sharing data without prop drilling", "Routing", "Testing"],
+      correct: 1,
+      hint: "It provides a way to pass data through the component tree"
+    },
+    {
+      question: "What triggers a re-render in React?",
+      options: ["Only state changes", "State or prop changes", "Only prop changes", "Manual trigger only"],
+      correct: 1,
+      hint: "Both can cause components to update"
+    },
+    {
+      question: "What is the purpose of React.Fragment?",
+      options: ["Error handling", "Grouping elements without extra DOM node", "Code splitting", "Lazy loading"],
+      correct: 1,
+      hint: "It can be written as <></>"
+    },
+  ],
+  nodejs: [
+    {
+      question: "What is Node.js built on?",
+      options: ["Python engine", "Chrome's V8 JavaScript engine", "Java Virtual Machine", "Ruby interpreter"],
+      correct: 1,
+      hint: "It's the same engine that powers Chrome browser"
+    },
+    {
+      question: "What does 'npm' stand for?",
+      options: ["Node Package Manager", "New Programming Method", "Network Protocol Module", "Node Project Manager"],
+      correct: 0,
+      hint: "It manages packages for Node"
+    },
+    {
+      question: "What is the event loop in Node.js?",
+      options: ["A for loop", "Mechanism for handling async operations", "A type of array", "A debugging tool"],
+      correct: 1,
+      hint: "It's what makes Node.js non-blocking"
+    },
+    {
+      question: "What does 'require()' do?",
+      options: ["Requires user input", "Imports modules", "Validates data", "Creates servers"],
+      correct: 1,
+      hint: "It's how you include external modules"
+    },
+    {
+      question: "What is Express.js?",
+      options: ["A database", "A web framework for Node.js", "A testing library", "A CSS framework"],
+      correct: 1,
+      hint: "It's the most popular Node.js web framework"
+    },
+    {
+      question: "What is middleware in Express?",
+      options: ["Hardware component", "Functions that execute during request-response cycle", "Database layer", "CSS processor"],
+      correct: 1,
+      hint: "It can modify request and response objects"
+    },
+    {
+      question: "What does 'module.exports' do?",
+      options: ["Imports modules", "Exports values from a module", "Creates modules", "Deletes modules"],
+      correct: 1,
+      hint: "It makes code available to other files"
+    },
+    {
+      question: "What is package.json used for?",
+      options: ["Styling", "Project metadata and dependencies", "Database schema", "Test configuration"],
+      correct: 1,
+      hint: "It's the heart of any Node.js project"
+    },
+    {
+      question: "What is a callback function in Node.js?",
+      options: ["A function that calls itself", "A function passed as argument to be executed later", "A synchronous function", "A constructor"],
+      correct: 1,
+      hint: "It's called back when an async operation completes"
+    },
+    {
+      question: "What does 'process.env' contain?",
+      options: ["Process ID", "Environment variables", "File paths", "Memory usage"],
+      correct: 1,
+      hint: "It's used for configuration like API keys"
+    },
+    {
+      question: "What is the purpose of 'fs' module?",
+      options: ["Full stack operations", "File system operations", "Form submission", "Function storage"],
+      correct: 1,
+      hint: "fs stands for file system"
+    },
+    {
+      question: "What is a Promise in Node.js?",
+      options: ["A guarantee", "An object representing eventual completion of async operation", "A variable type", "A function type"],
+      correct: 1,
+      hint: "It can be pending, fulfilled, or rejected"
+    },
+    {
+      question: "What does 'async/await' replace?",
+      options: ["Variables", "Callback chains and .then()", "For loops", "If statements"],
+      correct: 1,
+      hint: "It makes async code more readable"
+    },
+    {
+      question: "What is npm install --save-dev used for?",
+      options: ["Installing globally", "Installing as development dependency", "Saving to cloud", "Creating backups"],
+      correct: 1,
+      hint: "Dev dependencies aren't needed in production"
+    },
+    {
+      question: "What is the purpose of .env file?",
+      options: ["Environment configuration", "Error handling", "Event logging", "Export settings"],
+      correct: 0,
+      hint: "It stores sensitive configuration data"
+    },
+  ],
+  sql: [
+    {
+      question: "What does SQL stand for?",
+      options: ["Structured Query Language", "Simple Query Language", "Standard Query Logic", "System Query Language"],
+      correct: 0,
+      hint: "It's structured and used for queries"
+    },
+    {
+      question: "Which command is used to retrieve data?",
+      options: ["GET", "FETCH", "SELECT", "RETRIEVE"],
+      correct: 2,
+      hint: "You SELECT the data you want"
+    },
+    {
+      question: "What does WHERE clause do?",
+      options: ["Sorts data", "Filters rows based on condition", "Groups data", "Joins tables"],
+      correct: 1,
+      hint: "It specifies which rows to include"
+    },
+    {
+      question: "What is a PRIMARY KEY?",
+      options: ["The first column", "A unique identifier for rows", "The most important data", "A foreign reference"],
+      correct: 1,
+      hint: "Each row must have a unique primary key value"
+    },
+    {
+      question: "What does JOIN do?",
+      options: ["Combines columns", "Combines rows from multiple tables", "Adds new data", "Deletes data"],
+      correct: 1,
+      hint: "It brings together related data from different tables"
+    },
+    {
+      question: "What is the difference between INNER JOIN and LEFT JOIN?",
+      options: ["No difference", "LEFT JOIN includes unmatched rows from left table", "INNER JOIN is faster", "LEFT JOIN is deprecated"],
+      correct: 1,
+      hint: "LEFT JOIN keeps all rows from the left table"
+    },
+    {
+      question: "What does GROUP BY do?",
+      options: ["Sorts data", "Groups rows with same values", "Filters data", "Joins tables"],
+      correct: 1,
+      hint: "It's often used with aggregate functions"
+    },
+    {
+      question: "What is an INDEX used for?",
+      options: ["Counting rows", "Speeding up queries", "Sorting data", "Backing up data"],
+      correct: 1,
+      hint: "It makes searches faster like a book index"
+    },
+    {
+      question: "What does INSERT INTO do?",
+      options: ["Updates data", "Adds new rows", "Deletes rows", "Creates tables"],
+      correct: 1,
+      hint: "You're inserting new data into a table"
+    },
+    {
+      question: "What is NULL in SQL?",
+      options: ["Zero", "Empty string", "Unknown or missing value", "False"],
+      correct: 2,
+      hint: "NULL is not the same as 0 or empty"
+    },
+    {
+      question: "What does UPDATE command do?",
+      options: ["Creates new rows", "Modifies existing rows", "Deletes rows", "Reads rows"],
+      correct: 1,
+      hint: "It changes data that already exists"
+    },
+    {
+      question: "What is a FOREIGN KEY?",
+      options: ["A key from another database", "A reference to primary key in another table", "An encrypted key", "A backup key"],
+      correct: 1,
+      hint: "It creates relationships between tables"
+    },
+    {
+      question: "What does ORDER BY do?",
+      options: ["Filters data", "Groups data", "Sorts the result set", "Limits data"],
+      correct: 2,
+      hint: "You can order ASC or DESC"
+    },
+    {
+      question: "What is a subquery?",
+      options: ["A small query", "A query inside another query", "A fast query", "An invalid query"],
+      correct: 1,
+      hint: "Also called a nested query"
+    },
+    {
+      question: "What does DISTINCT keyword do?",
+      options: ["Makes query faster", "Removes duplicate rows from results", "Sorts uniquely", "Groups data"],
+      correct: 1,
+      hint: "It returns only unique values"
+    },
+  ],
+  prompteng: [
+    {
+      question: "What is prompt engineering?",
+      options: ["Building software", "Crafting effective AI prompts", "Hardware design", "Network engineering"],
+      correct: 1,
+      hint: "It's about communicating effectively with AI"
+    },
+    {
+      question: "What is a 'system prompt'?",
+      options: ["Operating system message", "Instructions that define AI behavior", "Error message", "User input"],
+      correct: 1,
+      hint: "It sets the context and rules for the AI"
+    },
+    {
+      question: "What is 'few-shot prompting'?",
+      options: ["Short prompts", "Providing examples in the prompt", "Quick responses", "Limited API calls"],
+      correct: 1,
+      hint: "You show the AI a few examples of what you want"
+    },
+    {
+      question: "What is 'chain-of-thought' prompting?",
+      options: ["Linking multiple AIs", "Asking AI to explain reasoning step by step", "Creating prompt chains", "Automated prompting"],
+      correct: 1,
+      hint: "It improves reasoning by showing thinking process"
+    },
+    {
+      question: "What does 'temperature' parameter control?",
+      options: ["Server heat", "Randomness/creativity of outputs", "Response speed", "Token count"],
+      correct: 1,
+      hint: "Higher temperature = more creative, lower = more focused"
+    },
+    {
+      question: "What is 'zero-shot prompting'?",
+      options: ["Failed prompt", "Prompting without examples", "Empty prompt", "First attempt"],
+      correct: 1,
+      hint: "The AI responds without being shown examples"
+    },
+    {
+      question: "What are 'tokens' in LLMs?",
+      options: ["Payment units", "Pieces of text (words/subwords)", "API keys", "Model parameters"],
+      correct: 1,
+      hint: "LLMs process text as tokens, not characters"
+    },
+    {
+      question: "What is 'hallucination' in AI?",
+      options: ["Visual output", "AI generating false information", "Image processing", "Voice recognition"],
+      correct: 1,
+      hint: "The AI confidently states incorrect facts"
+    },
+    {
+      question: "What is the purpose of 'role prompting'?",
+      options: ["Creating user roles", "Assigning AI a specific persona/role", "Managing permissions", "Testing roles"],
+      correct: 1,
+      hint: "Example: 'You are an expert Python developer...'"
+    },
+    {
+      question: "What is 'context window'?",
+      options: ["GUI element", "Maximum text an LLM can process at once", "Browser window", "Application window"],
+      correct: 1,
+      hint: "It limits how much the AI can 'remember'"
+    },
+    {
+      question: "What is 'prompt injection'?",
+      options: ["Adding more text", "Malicious attempt to override AI instructions", "Code injection", "Data insertion"],
+      correct: 1,
+      hint: "It's a security concern for AI applications"
+    },
+    {
+      question: "What does 'grounding' mean in prompts?",
+      options: ["Electrical grounding", "Providing factual context/sources", "Starting over", "Basic training"],
+      correct: 1,
+      hint: "It helps reduce hallucinations"
+    },
+    {
+      question: "What is 'RAG' in AI?",
+      options: ["Random AI Generation", "Retrieval-Augmented Generation", "Rapid AI Growth", "Regulated AI Guidance"],
+      correct: 1,
+      hint: "It combines retrieval with generation"
+    },
+    {
+      question: "Why use delimiters in prompts?",
+      options: ["For aesthetics", "To clearly separate different parts", "To reduce tokens", "To speed up processing"],
+      correct: 1,
+      hint: "Triple quotes or XML tags help structure prompts"
+    },
+    {
+      question: "What is 'output formatting' in prompts?",
+      options: ["Styling text", "Specifying desired response structure", "Compressing output", "Encrypting response"],
+      correct: 1,
+      hint: "Example: 'Respond in JSON format'"
     },
   ],
 }

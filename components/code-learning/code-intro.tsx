@@ -15,6 +15,10 @@ const languages = [
   { id: "cpp", name: "C++", icon: "⚙️", color: "from-blue-500 to-blue-700", desc: "System programming" },
   { id: "csharp", name: "C#", icon: "🎮", color: "from-purple-500 to-purple-700", desc: "Game development" },
   { id: "go", name: "Go", icon: "🔵", color: "from-cyan-400 to-cyan-600", desc: "Cloud & backend" },
+  { id: "react", name: "React", icon: "⚛️", color: "from-cyan-400 to-blue-500", desc: "UI component library" },
+  { id: "nodejs", name: "Node.js", icon: "🟢", color: "from-green-500 to-green-700", desc: "Server-side JavaScript" },
+  { id: "sql", name: "SQL", icon: "🗄️", color: "from-orange-400 to-red-500", desc: "Database queries" },
+  { id: "prompteng", name: "Prompt Engineering", icon: "🤖", color: "from-violet-500 to-purple-600", desc: "AI & LLM prompts" },
 ]
 
 const benefits = [
