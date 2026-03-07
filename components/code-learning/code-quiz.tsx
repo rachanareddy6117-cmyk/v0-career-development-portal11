@@ -50,6 +50,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       correct: 1,
       hint: "// is floor division"
     },
+    {
+      question: "Which method adds an element to the end of a list?",
+      options: ["add()", "append()", "insert()", "push()"],
+      correct: 1,
+      hint: "It's a common list method in Python"
+    },
+    {
+      question: "What is the output of bool('')?",
+      options: ["True", "False", "None", "Error"],
+      correct: 1,
+      hint: "Empty strings are considered falsy in Python"
+    },
+    {
+      question: "How do you create a dictionary in Python?",
+      options: ["dict = []", "dict = ()", "dict = {}", "dict = <>"],
+      correct: 2,
+      hint: "Dictionaries use curly braces"
+    },
+    {
+      question: "What does 'range(5)' generate?",
+      options: ["1 to 5", "0 to 5", "0 to 4", "1 to 4"],
+      correct: 2,
+      hint: "range() starts at 0 and excludes the end value"
+    },
+    {
+      question: "Which keyword is used to define a function?",
+      options: ["function", "func", "def", "define"],
+      correct: 2,
+      hint: "It's short for 'define'"
+    },
   ],
   javascript: [
     {
@@ -81,6 +111,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       options: ["true", "false", "null", "undefined"],
       correct: 0,
       hint: "With loose equality, they are considered equal"
+    },
+    {
+      question: "What does 'NaN === NaN' return?",
+      options: ["true", "false", "NaN", "undefined"],
+      correct: 1,
+      hint: "NaN is not equal to anything, including itself"
+    },
+    {
+      question: "Which method removes the last element from an array?",
+      options: ["pop()", "shift()", "slice()", "splice()"],
+      correct: 0,
+      hint: "Think of popping a balloon - it's at the end"
+    },
+    {
+      question: "What is the output of '5' + 3?",
+      options: ["8", "'53'", "Error", "undefined"],
+      correct: 1,
+      hint: "JavaScript converts numbers to strings when concatenating"
+    },
+    {
+      question: "Which method is used to parse JSON?",
+      options: ["JSON.parse()", "JSON.stringify()", "JSON.decode()", "JSON.convert()"],
+      correct: 0,
+      hint: "Parse means to analyze and convert"
+    },
+    {
+      question: "What does 'this' refer to in a regular function?",
+      options: ["The function itself", "Global object or caller", "undefined always", "The parent function"],
+      correct: 1,
+      hint: "It depends on how the function is called"
     },
   ],
   java: [
@@ -114,6 +174,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       correct: 2,
       hint: "One of these is actually a class"
     },
+    {
+      question: "What is the parent class of all classes in Java?",
+      options: ["Object", "Class", "Main", "Super"],
+      correct: 0,
+      hint: "Everything in Java is an..."
+    },
+    {
+      question: "Which access modifier makes a member accessible only within its class?",
+      options: ["public", "protected", "private", "default"],
+      correct: 2,
+      hint: "It's the most restrictive access level"
+    },
+    {
+      question: "What does 'static' mean for a method?",
+      options: ["Cannot be changed", "Belongs to the class, not instance", "Runs at startup", "Is synchronized"],
+      correct: 1,
+      hint: "You can call it without creating an object"
+    },
+    {
+      question: "Which collection allows duplicate elements?",
+      options: ["Set", "List", "Map", "HashSet"],
+      correct: 1,
+      hint: "It maintains insertion order and allows duplicates"
+    },
+    {
+      question: "What is the result of 5/2 in Java (both are int)?",
+      options: ["2.5", "2", "3", "2.0"],
+      correct: 1,
+      hint: "Integer division truncates the decimal"
+    },
   ],
   c: [
     {
@@ -145,6 +235,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       options: ["2 bytes", "4 bytes", "8 bytes", "Depends on compiler"],
       correct: 1,
       hint: "It's usually 4 bytes on most modern systems"
+    },
+    {
+      question: "What does malloc() return on failure?",
+      options: ["0", "NULL", "-1", "undefined"],
+      correct: 1,
+      hint: "It returns a null pointer when memory allocation fails"
+    },
+    {
+      question: "Which loop is guaranteed to execute at least once?",
+      options: ["for", "while", "do-while", "None of them"],
+      correct: 2,
+      hint: "The condition is checked at the end"
+    },
+    {
+      question: "What is the correct way to allocate memory for an array of 10 integers?",
+      options: ["malloc(10)", "malloc(10 * int)", "malloc(10 * sizeof(int))", "alloc(10, int)"],
+      correct: 2,
+      hint: "You need to multiply count by the size of each element"
+    },
+    {
+      question: "What does the 'static' keyword do for a local variable?",
+      options: ["Makes it constant", "Preserves value between function calls", "Makes it global", "Prevents modification"],
+      correct: 1,
+      hint: "The variable retains its value"
+    },
+    {
+      question: "Which operator is used for structure member access via pointer?",
+      options: [".", "->", "*", "&"],
+      correct: 1,
+      hint: "It looks like an arrow"
     },
   ],
   cpp: [
@@ -178,6 +298,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       correct: 0,
       hint: "It's the tilde character"
     },
+    {
+      question: "What is the difference between 'new' and 'malloc'?",
+      options: ["No difference", "new calls constructor, malloc doesn't", "malloc is faster", "new is for arrays only"],
+      correct: 1,
+      hint: "new is object-oriented and initializes objects"
+    },
+    {
+      question: "Which keyword is used for runtime polymorphism?",
+      options: ["static", "virtual", "override", "dynamic"],
+      correct: 1,
+      hint: "It allows derived classes to override methods"
+    },
+    {
+      question: "What does 'std::' indicate?",
+      options: ["Static member", "Standard namespace", "String type", "Structure definition"],
+      correct: 1,
+      hint: "std stands for standard"
+    },
+    {
+      question: "What is a reference in C++?",
+      options: ["A pointer", "An alias for another variable", "A copy of variable", "A constant"],
+      correct: 1,
+      hint: "It's another name for an existing variable"
+    },
+    {
+      question: "Which container provides O(1) access by index?",
+      options: ["list", "set", "vector", "map"],
+      correct: 2,
+      hint: "It's like a dynamic array"
+    },
   ],
   csharp: [
     {
@@ -210,6 +360,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       correct: 1,
       hint: "The compiler figures out the type"
     },
+    {
+      question: "What is LINQ used for?",
+      options: ["Network programming", "Querying data collections", "Memory management", "Threading"],
+      correct: 1,
+      hint: "Language Integrated Query"
+    },
+    {
+      question: "What is the difference between 'ref' and 'out' parameters?",
+      options: ["No difference", "ref must be initialized, out doesn't", "out is faster", "ref is for arrays"],
+      correct: 1,
+      hint: "out parameters must be assigned inside the method"
+    },
+    {
+      question: "What does 'async' keyword indicate?",
+      options: ["Synchronous method", "Asynchronous method", "Static method", "Abstract method"],
+      correct: 1,
+      hint: "It enables the use of await"
+    },
+    {
+      question: "What is a delegate in C#?",
+      options: ["A class member", "A type-safe function pointer", "An interface", "A structure"],
+      correct: 1,
+      hint: "It holds references to methods"
+    },
+    {
+      question: "Which keyword is used to handle exceptions?",
+      options: ["error", "catch", "handle", "except"],
+      correct: 1,
+      hint: "You try and then..."
+    },
   ],
   go: [
     {
@@ -241,6 +421,36 @@ const quizQuestions: Record<string, { question: string; options: string[]; corre
       options: ["export keyword", "public keyword", "Capitalize first letter", "Use * prefix"],
       correct: 2,
       hint: "Go uses naming conventions"
+    },
+    {
+      question: "What is a channel used for in Go?",
+      options: ["File I/O", "Communication between goroutines", "Network requests", "Error handling"],
+      correct: 1,
+      hint: "Channels enable safe data exchange between concurrent operations"
+    },
+    {
+      question: "What does 'defer' do in Go?",
+      options: ["Delays execution until function returns", "Creates a goroutine", "Handles errors", "Imports packages"],
+      correct: 0,
+      hint: "Deferred calls are executed in LIFO order"
+    },
+    {
+      question: "How do you declare a constant in Go?",
+      options: ["var const x = 5", "const x = 5", "let x = 5", "constant x = 5"],
+      correct: 1,
+      hint: "Go uses a simple keyword for constants"
+    },
+    {
+      question: "What is the zero value for a string in Go?",
+      options: ["null", "nil", "\"\"", "undefined"],
+      correct: 2,
+      hint: "It's an empty string"
+    },
+    {
+      question: "Which keyword is used to create a new type?",
+      options: ["class", "type", "struct", "new"],
+      correct: 1,
+      hint: "You use 'type' followed by the name and definition"
     },
   ],
 }
