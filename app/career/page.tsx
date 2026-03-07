@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { ChatBot } from "@/components/chat-bot"
+import { SGAAssistant } from "@/components/sga-assistant"
 import { CareerForm } from "@/components/career/career-form"
 import { CareerResults } from "@/components/career/career-results"
 
@@ -42,7 +42,7 @@ export default function CareerPage() {
         )}
       </div>
       <Footer />
-      <ChatBot isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      <SGAAssistant isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
     </main>
   )
 }

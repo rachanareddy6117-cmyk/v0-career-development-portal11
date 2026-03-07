@@ -3,10 +3,10 @@
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { ChatBot } from "@/components/chat-bot"
+import { SGAAssistant } from "@/components/sga-assistant"
 import { InterviewHub } from "@/components/interview/interview-hub"
 import { ResumeBuilder } from "@/components/interview/resume-builder"
-import { MockInterview } from "@/components/interview/mock-interview"
+import { AIMentor } from "@/components/interview/ai-mentor"
 import { PersonalityDev } from "@/components/interview/personality-dev"
 
 type Section = "hub" | "resume" | "mock" | "personality"
@@ -21,11 +21,11 @@ export default function InterviewPage() {
       <div className="pt-24 pb-20">
         {activeSection === "hub" && <InterviewHub onNavigate={setActiveSection} />}
         {activeSection === "resume" && <ResumeBuilder onBack={() => setActiveSection("hub")} />}
-        {activeSection === "mock" && <MockInterview onBack={() => setActiveSection("hub")} />}
+        {activeSection === "mock" && <AIMentor onBack={() => setActiveSection("hub")} />}
         {activeSection === "personality" && <PersonalityDev onBack={() => setActiveSection("hub")} />}
       </div>
       <Footer />
-      <ChatBot isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      <SGAAssistant isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
     </main>
   )
 }

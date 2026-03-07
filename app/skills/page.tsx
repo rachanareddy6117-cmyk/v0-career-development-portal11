@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { ChatBot } from "@/components/chat-bot"
+import { SGAAssistant } from "@/components/sga-assistant"
 import { SkillsIntro } from "@/components/skills/skills-intro"
 import { SkillsChallenge } from "@/components/skills/skills-challenge"
 import { SkillsResults } from "@/components/skills/skills-results"
@@ -48,7 +48,7 @@ export default function SkillsPage() {
         {step === "results" && result && <SkillsResults result={result} onReset={handleReset} />}
       </div>
       <Footer />
-      <ChatBot isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      <SGAAssistant isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
     </main>
   )
 }

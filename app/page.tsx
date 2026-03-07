@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
 import { FeatureCards } from "@/components/feature-cards"
-import { ChatBot } from "@/components/chat-bot"
+import { SGAAssistant } from "@/components/sga-assistant"
 import { Footer } from "@/components/footer"
 
 export default function HomePage() {
@@ -16,7 +16,7 @@ export default function HomePage() {
       <HeroSection />
       <FeatureCards />
       <Footer />
-      <ChatBot isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      <SGAAssistant isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
     </main>
   )
 }

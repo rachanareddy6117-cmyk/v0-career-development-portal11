@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { ChatBot } from "@/components/chat-bot"
+import { SGAAssistant } from "@/components/sga-assistant"
 import { CodeQuiz } from "@/components/code-learning/code-quiz"
 import { CodeResults } from "@/components/code-learning/code-results"
 import { CodeLearningIntro } from "@/components/code-learning/code-intro"
@@ -47,7 +47,7 @@ export default function CodeLearningPage() {
         {step === "results" && quizResult && <CodeResults result={quizResult} onReset={handleReset} />}
       </div>
       <Footer />
-      <ChatBot isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+      <SGAAssistant isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
     </main>
   )
 }
