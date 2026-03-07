@@ -1,9 +1,13 @@
 "use client"
 
+import { useState } from "react"
 import { ArrowRight, Play, Zap, Target, BookOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { DemoModal } from "@/components/demo-modal"
 
 export function HeroSection() {
+  const [isDemoOpen, setIsDemoOpen] = useState(false)
+
   return (
     <section className="relative pt-32 pb-20 px-4 overflow-hidden">
       {/* Background effects */}
@@ -48,7 +52,12 @@ export function HeroSection() {
               Start Your Journey
               <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button size="lg" variant="outline" className="gap-2 h-14 px-8 text-lg border-border text-foreground hover:bg-muted">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="gap-2 h-14 px-8 text-lg border-border text-foreground hover:bg-muted"
+              onClick={() => setIsDemoOpen(true)}
+            >
               <Play className="w-5 h-5" />
               Watch Demo
             </Button>
@@ -117,6 +126,8 @@ export function HeroSection() {
           animation-delay: 1s;
         }
       `}</style>
+
+      <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
     </section>
   )
 }
